@@ -11,8 +11,8 @@
     <ImageView
         android:id="@+id/title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/abcc" />
+        android:layout_height="260dp"
+        app:srcCompat="@drawable/cats_0" />
 
 
     <Button
