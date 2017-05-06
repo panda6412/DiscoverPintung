@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">DiscoverPintung</string>
     <string name="adapter_btnText" />
+    <string name="title_activity_maps">Map</string>
+
 </resources>
