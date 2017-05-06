@@ -20,7 +20,7 @@ public class home extends AppCompatActivity {
         }
         //flipper.setInAnimation(this, R.anim.left_in);
         //flipper.setOutAnimation(this, R.anim.left_out);
-        flipper.setFlipInterval(5000);
+        flipper.setFlipInterval(3000);
         flipper.startFlipping();
     }
         private ImageView getImageView(int resId){
