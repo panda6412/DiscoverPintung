@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DiscoverPintung</string>
+    <string name="adapter_btnText" />
 </resources>
