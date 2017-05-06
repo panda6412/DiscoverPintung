@@ -36,10 +36,6 @@ import okhttp3.Response;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-
-    final OkHttpClient client = new OkHttpClient();
-    final Gson gson = new Gson();
-
     private static final int REQUEST_LOCATION = 2;
     private GoogleMap mMap;
     private String[] locations = {"22.6577335, 120.5121661",
@@ -98,7 +94,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 doMark(locations);
             }
         });
-        fetchDataInBackground();
 
     }
 
@@ -128,49 +123,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .title("test"));
         }
 
-    }
-    private void fetchDataInBackground() {
-        final Request request = new Request.Builder().url("https://www.fun2tw.com/TravelPlan/json").build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException{
-                if(!response.isSuccessful())
-                    throw  new IOException("Unexpected code"+response);
-                else{
-                    try{
-                        final String resStr = response.body().string();
-//                        JSONObject jsonObject = new JSONObject(resStr);
-                        final List<Landspace> landspaces = gson.fromJson(resStr,new TypeToken<List<Landspace>>(){}.getType());
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                StringBuffer sb = new StringBuffer();
-                                for(Landspace landspace : landspaces){
-                                    sb.append("_id"+landspace.getId()+"\n")
-                                            .append("Station"+landspace.getCatalog()+"\n")
-                                            .append("Destination"+landspace.getSubject()+"\n")
-                                            .append("Destination"+landspace.getLat()+"\n")
-                                            .append("Destination"+landspace.getLon()+"\n")
-                                            .append("Destination"+landspace.getAddress()+"\n")
-                                            .append("Destination"+landspace.getTel()+"\n")
-                                            .append("Destination"+landspace.getUpImageUrl()+"\n")
-                                            .append("Destination"+landspace.getInitDate()+"\n")
-                                            .append("Destination"+landspace.getDisShow()+"\n")
-                                            .append("UpdateTime"+landspace.getType()+"\n-----------------------------");
-                                }
-                                Log.d("DATA",sb.toString());
-                            }
-                        });
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
     }
 }

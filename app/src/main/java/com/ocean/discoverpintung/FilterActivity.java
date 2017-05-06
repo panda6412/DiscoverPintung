@@ -3,6 +3,7 @@ package com.ocean.discoverpintung;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -17,6 +18,13 @@ public class FilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
         findViews();
+
+        try{
+            Log.d("SUCCESS",getIntent().getStringExtra("data"));
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
 
     }
 
