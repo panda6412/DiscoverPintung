@@ -24,6 +24,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".LandScapeListActivity"></activity>
+
+
         <activity android:name=".FilterActivity"></activity>
 
 
@@ -43,6 +46,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+
     </application>
 
 </manifest>
