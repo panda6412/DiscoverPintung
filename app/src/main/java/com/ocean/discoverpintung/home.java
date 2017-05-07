@@ -1,6 +1,7 @@
 package com.ocean.discoverpintung;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import com.ocean.discoverpintung.DTO.Landspace;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
@@ -30,7 +32,8 @@ public class home extends AppCompatActivity {
     final OkHttpClient client = new OkHttpClient();
     final Gson gson = new Gson();
 
-    String landscape ;
+
+    ArrayList<Landspace> landscapes ;
 
     private ViewFlipper flipper;
 
@@ -54,7 +57,7 @@ public class home extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 fetchDataInBackground();
-                startActivity(new Intent(home.this,FilterActivity.class).putExtra("data",landscape));
+                startActivity(new Intent(home.this,FilterActivity.class).putExtra("data",landscapes));
             }
         });
 
@@ -81,28 +84,28 @@ public class home extends AppCompatActivity {
                     try{
                         final String resStr = response.body().string();
 //                        JSONObject jsonObject = new JSONObject(resStr);
-                        final List<Landspace> landspaces = gson.fromJson(resStr,new TypeToken<List<Landspace>>(){}.getType());
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                StringBuffer sb = new StringBuffer();
-                                for(Landspace landspace : landspaces){
-                                    sb.append("_id"+landspace.getId()+"\n")
-                                            .append("Station"+landspace.getCatalog()+"\n")
-                                            .append("Destination"+landspace.getSubject()+"\n")
-                                            .append("Destination"+landspace.getLat()+"\n")
-                                            .append("Destination"+landspace.getLon()+"\n")
-                                            .append("Destination"+landspace.getAddress()+"\n")
-                                            .append("Destination"+landspace.getTel()+"\n")
-                                            .append("Destination"+landspace.getUpImageUrl()+"\n")
-                                            .append("Destination"+landspace.getInitDate()+"\n")
-                                            .append("Destination"+landspace.getDisShow()+"\n")
-                                            .append("UpdateTime"+landspace.getType()+"\n-----------------------------");
-                                }
-                                Log.d("DATA",sb.toString());
-                                landscape = sb.toString();
-                            }
-                        });
+
+//                        runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                StringBuffer sb = new StringBuffer();
+//                                for(Landspace landspace : landspaces){
+//                                    sb.append("_id"+landspace.getId()+"\n")
+//                                            .append("Station"+landspace.getCatalog()+"\n")
+//                                            .append("Destination"+landspace.getSubject()+"\n")
+//                                            .append("Destination"+landspace.getLat()+"\n")
+//                                            .append("Destination"+landspace.getLon()+"\n")
+//                                            .append("Destination"+landspace.getAddress()+"\n")
+//                                            .append("Destination"+landspace.getTel()+"\n")
+//                                            .append("Destination"+landspace.getUpImageUrl()+"\n")
+//                                            .append("Destination"+landspace.getInitDate()+"\n")
+//                                            .append("Destination"+landspace.getDisShow()+"\n")
+//                                            .append("UpdateTime"+landspace.getType()+"\n-----------------------------");
+//                                }
+//                                Log.d("DATA",sb.toString());
+//                                landscape = sb.toString();
+//                            }
+//                        });
                     }catch (Exception e){
                         e.printStackTrace();
                     }

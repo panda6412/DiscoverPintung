@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.ocean.discoverpintung.DTO.Landspace;
+
+import java.util.ArrayList;
+
 public class FilterActivity extends AppCompatActivity {
 
     private Button linkAll;
@@ -20,11 +24,10 @@ public class FilterActivity extends AppCompatActivity {
         findViews();
 
         try{
-            Log.d("SUCCESS",getIntent().getStringExtra("data"));
-        }catch(Exception e){
+//            Log.d("DATA",getIntent().getParcelableArrayListExtra("data").toString());
+        }catch (Exception e){
             e.printStackTrace();
         }
-
 
     }
 
@@ -35,8 +38,12 @@ public class FilterActivity extends AppCompatActivity {
     }
 
     public void all_show(View view){
-        startActivity(new Intent(FilterActivity.this,FilterActivity.class));
-
+        try{
+//            Log.d("DATA",getIntent().getParcelableArrayListExtra("data").toString());
+            startActivity(new Intent(FilterActivity.this,LandScapeListActivity.class));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void human_show(View view){

@@ -1,10 +1,12 @@
 package com.ocean.discoverpintung;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,16 +20,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ocean.discoverpintung.DTO.Landspace;
+import com.ocean.discoverpintung.DTO.LandspaceCart;
+import com.squareup.picasso.Picasso;
+
 public class MyAdapter extends BaseAdapter {
     Context context  ;
 
+    public List<Landspace> landspaceCart = new ArrayList<>();
     private LayoutInflater myInflater;
-    private List<Land> lands;
-    public MyAdapter(Context context, List<Land> lands){
+    private List<Landspace> lands ;
+    public MyAdapter(Context context, List<Landspace> lands){
         myInflater = LayoutInflater.from(context);
         this.lands = lands ;
         this.context =  context ;
+
     }
+
 
     @Override
     public int getCount() {
@@ -54,15 +63,17 @@ public class MyAdapter extends BaseAdapter {
             TextView itemName = (TextView)row.findViewById(R.id.ItemName);
             final Button itemButton = (Button)row.findViewById(R.id.ItemButton);
 
-            Land ld = (Land)getItem(position) ;
-            //itemImage.setImageURI(Uri.parse(ld.getImageUrl()));
-            itemInfo.setText(ld.getTitle());
+            final Landspace ld = (Landspace)getItem(position) ;
+//            itemImage.setImageURI(Uri.parse(ld.getUpImageUrl()));
+            Picasso.with(context).load(ld.getUpImageUrl()).into(itemImage);
+            itemInfo.setText(ld.getSubject());
             itemName.setText(ld.getAddress());
 
             itemButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,itemButton.getId()+"is clicked",Toast.LENGTH_LONG).show();
+                    Toast.makeText(context,ld.getSubject()+"is add in schedule !!",Toast.LENGTH_LONG).show();
+
                 }
             });
         }
@@ -70,5 +81,9 @@ public class MyAdapter extends BaseAdapter {
 
 
         return row;
+    }
+
+    public List<Landspace> getLandspaceCart(){
+        return landspaceCart ;
     }
 }

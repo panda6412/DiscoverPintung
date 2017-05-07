@@ -3,6 +3,7 @@ package com.ocean.discoverpintung;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -16,8 +17,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.ocean.discoverpintung.DTO.Landspace;
@@ -38,13 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final int REQUEST_LOCATION = 2;
     private GoogleMap mMap;
-    private String[] locations = {"22.6577335, 120.5121661",
-            "22.6577335 ,  120.7",
-            "22.7 ,  120.8",
-            "22.8 ,  120.9",
-            "22.9 ,  121.0",
-            "22.6577335 ,  120.1",
-            "22.6577335 ,  120.2",};
+    private String[] locations = {"21.922294,120.737541","22.190221,120.877681"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
     }
 
 
@@ -86,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
         String provider = locationManager.getBestProvider(criteria,true);
         Location location = locationManager.getLastKnownLocation(provider);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(),location.getLongitude()),15));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(21.922294,120.737541),10));
         Log.d("MyLOCATION",location.getLatitude()+"/"+location.getLongitude());
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
@@ -121,7 +120,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(latitude,longitude))
                     .title("test"));
-        }
 
+
+        }
+        mMap.addPolygon(new PolygonOptions()
+                .add(new LatLng(21.922294,120.737541),(new LatLng(22.190221,120.877681)))).setStrokeWidth(3);
+
+        mMap.addCircle(new CircleOptions()
+                .center(new LatLng(21.922294,120.737541))
+                .radius(2000)
+                .strokeWidth(2)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(140, 255, 0, 0))
+                .clickable(true));
+        mMap.addCircle(new CircleOptions()
+                .center(new LatLng(22.190221,120.877681))
+                .radius(2000)
+                .strokeWidth(2)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(140, 255, 0, 0))
+                .clickable(true));
     }
 }
